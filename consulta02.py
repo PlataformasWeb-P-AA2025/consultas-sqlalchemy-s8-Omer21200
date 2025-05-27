@@ -17,9 +17,9 @@ session = Session()
 # Consulta:
 # Se hace join entre Departamento, Curso, Tarea y Entrega para filtrar por calificaciones menores o iguales a 0.3
 
-departamentos = session.query(Departamento ).join(Departamento.cursos) \
- .join(Curso.tareas) \
- .join(Tarea.entregas) \
+departamentos = session.query(Departamento ) \
+ .join(Curso) \
+ .join(Tarea) \
  .filter(Entrega.calificacion <= 0.3) \
  .group_by(Departamento.id) \
  .all()
@@ -27,9 +27,11 @@ departamentos = session.query(Departamento ).join(Departamento.cursos) \
 # Presentación de resultados
 
 for departamento in departamentos:
-    num_cursos = session.query(Curso).filter(Curso.departamento_id == departamento.id).count()
     print(f"Departamento: {departamento.nombre}")
-    print(f"Número de cursos: {num_cursos}")
+    print(f"Número de cursos: {len(departamento.cursos)}")
     print("\n")
+
+# Cerrar la sesión
+session.close()
 
        
