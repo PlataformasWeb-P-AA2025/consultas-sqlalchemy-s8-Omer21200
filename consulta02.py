@@ -20,6 +20,7 @@ session = Session()
 departamentos = session.query(Departamento ) \
  .join(Curso) \
  .join(Tarea) \
+ .join(Entrega) \
  .filter(Entrega.calificacion <= 0.3) \
  .group_by(Departamento.id) \
  .all()
