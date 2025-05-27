@@ -23,7 +23,8 @@ for curso in cursos:
     # Hacemos join de Entrega y Tarea para poder filtrar por curso_id
     promedio = session.query(func.avg(Entrega.calificacion)) \
         .join(Tarea) \
-        .filter(Tarea.curso_id == curso.id) \
+        .join(Curso) \
+        .filter(Tarea.curso== curso) \
         .scalar()
 
     print(f"Curso: {curso.titulo}")
